@@ -8,7 +8,6 @@ import PIL.Image as pil_image
 from models import FSRCNN
 from utils import convert_ycbcr_to_rgb, preprocess, calc_psnr
 
-
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--weights-file', type=str, required=True)
@@ -22,11 +21,12 @@ if __name__ == '__main__':
     model = FSRCNN(scale_factor=args.scale).to(device)
 
     state_dict = model.state_dict()
-    for n, p in torch.load(args.weights_file, map_location=lambda storage, loc: storage).items():
-        if n in state_dict.keys():
-            state_dict[n].copy_(p)
+    for layer_name, layer_parameter in torch.load(args.weights_file,
+                                                  map_location='cuda' if torch.cuda.is_available() else 'cpu').items():
+        if layer_name in state_dict.keys():
+            state_dict[layer_name].copy_(layer_parameter)
         else:
-            raise KeyError(n)
+            raise KeyError(layer_name)
 
     model.eval()
 

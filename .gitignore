@@ -3,3 +3,4 @@
 data/datasets/train/*
 data/datasets/eval/*
 data/checkpoints/*
+**/__pycache__
