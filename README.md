@@ -82,13 +82,13 @@ PSNR was calculated on the Y channel.
     </tr>
     <tr>
     	<td>
-    		<center><img src="./data/lenna.bmp""></center>
+    		<center><img src="data/samples/lenna.bmp""></center>
     	</td>
     	<td>
-    		<center><img src="./data/lenna_bicubic_x3.bmp"></center>
+    		<center><img src="data/samples/lenna_bicubic_x3.bmp"></center>
     	</td>
     	<td>
-    		<center><img src="./data/lenna_fsrcnn_x3.bmp"></center>
+    		<center><img src="data/samples/lenna_fsrcnn_x3.bmp"></center>
     	</td>
     </tr>
     <tr>
@@ -98,13 +98,13 @@ PSNR was calculated on the Y channel.
     </tr>
     <tr>
     	<td>
-    		<center><img src="./data/butterfly_GT.bmp""></center>
+    		<center><img src="data/samples/butterfly_GT.bmp""></center>
     	</td>
     	<td>
-    		<center><img src="./data/butterfly_GT_bicubic_x3.bmp"></center>
+    		<center><img src="data/samples/butterfly_GT_bicubic_x3.bmp"></center>
     	</td>
     	<td>
-    		<center><img src="./data/butterfly_GT_fsrcnn_x3.bmp"></center>
+    		<center><img src="data/samples/butterfly_GT_fsrcnn_x3.bmp"></center>
     	</td>
     </tr>
 </table>
