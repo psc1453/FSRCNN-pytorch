@@ -5,6 +5,7 @@ import torch
 import torch.backends.cudnn as cudnn
 from torch.utils.data.dataloader import DataLoader
 from torch.ao.quantization import get_default_qconfig_mapping, quantize_fx
+import matplotlib.pyplot as plt
 
 from models import FSRCNN
 from datasets import EvalDataset
@@ -16,6 +17,7 @@ if __name__ == '__main__':
     parser.add_argument('--weights-file', type=str, required=True)
     parser.add_argument('--scale', type=int, default=3, required=True)
     parser.add_argument('--num-workers', type=int, default=8)
+    parser.add_argument('--show', action='store_true')
     args = parser.parse_args()
 
     cudnn.benchmark = True
@@ -54,6 +56,12 @@ if __name__ == '__main__':
 
         with torch.no_grad():
             preds = model_quantized(inputs).clamp(0.0, 1.0)
+
+        if args.show:
+            image_array = preds[0][0].numpy()
+            plt.imshow(image_array, cmap='gray')
+            plt.axis('off')
+            plt.show()
 
         current_psnr = calc_psnr(preds, labels)
         epoch_psnr.update(current_psnr, len(inputs))
