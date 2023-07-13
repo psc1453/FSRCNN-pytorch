@@ -6,7 +6,7 @@ from typing import TypeVar
 
 __all__ = ['quantize_tensor_with_original_scale', 'quantize_model_with_original_scale']
 
-Module = TypeVar("Module", bound=nn.Module)
+NN = TypeVar("NN", bound=nn.Module)
 
 
 def quantize_tensor_with_original_scale(tensor_input: torch.Tensor, width: int) -> torch.Tensor:
@@ -33,7 +33,7 @@ def quantize_tensor_with_original_scale(tensor_input: torch.Tensor, width: int) 
         return quantized_tensor
 
 
-def quantize_model_with_original_scale(model_input: nn.Module, weight_width: int, bias_weight: int) -> Module:
+def quantize_model_with_original_scale(model_input: nn.Module, weight_width: int, bias_weight: int) -> NN:
     model = copy.deepcopy(model_input)
     model_parameters = model.state_dict()
     for parameter_name in model_parameters:
