@@ -4,7 +4,7 @@ from torch import nn
 from models import FSRCNN
 from typing import TypeVar
 
-__all__ = ['quantize_tensor_with_original_scale', 'quantize_model_with_original_scale']
+__all__ = ['quantize_tensor_with_original_scale', 'quantize_model_parameters_with_original_scale', 'NN']
 
 NN = TypeVar("NN", bound=nn.Module)
 
@@ -33,7 +33,7 @@ def quantize_tensor_with_original_scale(tensor_input: torch.Tensor, width: int) 
         return quantized_tensor
 
 
-def quantize_model_with_original_scale(model_input: nn.Module, weight_width: int, bias_weight: int) -> NN:
+def quantize_model_parameters_with_original_scale(model_input: nn.Module, weight_width: int, bias_weight: int) -> NN:
     model = copy.deepcopy(model_input)
     model_parameters = model.state_dict()
     for parameter_name in model_parameters:
