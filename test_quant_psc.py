@@ -10,8 +10,8 @@ from datasets import EvalDataset
 from utils import AverageMeter, calc_psnr
 
 from ModelModifier.modifier.classes import NodeInsertMapping, NodeInsertMappingElement, FunctionPackage
-from ModelModifier.modifier.utils import generate_quantized_module
-from ModelModifier.tools.quantization import quantize_model_parameters_with_original_scale, \
+from ModelModifier.modifier.utils import insert_after
+from ModelModifier.tools.quantization.utils import quantize_model_parameters_with_original_scale, \
     quantize_tensor_with_original_scale
 
 
@@ -48,12 +48,12 @@ def get_quant_model(model, weight=32, bias=32, conv=32):
     conv2d_config = NodeInsertMappingElement(torch.nn.Conv2d, quantize_8bit_function_package)
     mapping.add_config(conv2d_config)
 
-    new = generate_quantized_module(model_input=quantized_by_parameters_model, insert_mapping=mapping)
+    new = insert_after(model_input=quantized_by_parameters_model, insert_mapping=mapping)
     return new
 
 
 def main(args):
-    device = torch.device('mps')
+    device = torch.device('cpu')
 
     model = FSRCNN(scale_factor=args.scale).to(device)
     model.load_state_dict(torch.load(args.weights_file, map_location=device))
